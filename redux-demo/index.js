@@ -1,6 +1,10 @@
 const redux = require("redux");
 const createStore = redux.legacy_createStore;
 const bindActionCreators = redux.bindActionCreators;
+const applyMiddleware = redux.applyMiddleware;
+
+const reduxLogger = require("redux-logger");
+const logger = reduxLogger.createLogger();
 
 // Action type
 const CAKE_ORDERED = "CAKE_ORDERED";
@@ -46,12 +50,10 @@ const reducer = (state = initialState, action) => {
 };
 
 // Passing reducer store have the initial state
-const store = createStore(reducer);
+const store = createStore(reducer, applyMiddleware(logger));
 console.log("Initial State", store.getState());
 
-const unsubscribe = store.subscribe(() =>
-  console.log("Updated State", store.getState())
-);
+const unsubscribe = store.subscribe(() => {});
 
 // store.dispatch(orderCake());
 // store.dispatch(orderCake());
